@@ -1,4 +1,5 @@
 import subprocess
+import tempfile
 from collections.abc import Iterator
 from pathlib import Path
 
@@ -7,7 +8,23 @@ from .models import Document
 EXTENSIONS = {".py", ".md", ".yaml", ".yml"}
 
 
-def iter_repository(path: str) -> Iterator[Document]:
+def iter_repository(url: str, branch: str = "main") -> Iterator[Document]:
+    path = Path(tempfile.mkdtemp())
+
+    subprocess.run(
+        [
+            "git",
+            "clone",
+            "--depth",
+            "1",
+            "--branch",
+            branch,
+            url,
+            str(path),
+        ],
+        check=True,
+    )
+
     files = subprocess.check_output(
         ["git", "-C", path, "ls-files"],
         text=True,
