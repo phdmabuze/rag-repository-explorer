@@ -2,17 +2,30 @@
 name = "rag-repository-explorer"
 version = "0.1.0"
 requires-python = ">=3.13"
+
 dependencies = [
-    "alembic>=1.18.5",
     "asyncpg>=0.31.0",
     "greenlet>=3.5.3",
     "pgvector>=0.5.0",
     "pydantic-settings>=2.14.2",
-    "sentence-transformers>=5.6.0",
     "sqlalchemy>=2.0.51",
 ]
 
 [dependency-groups]
+api = [
+    "fastapi>=0.139.2",
+    "uvicorn>=0.51.0",
+    "sentence-transformers>=5.6.0",
+]
+
+indexer = [
+    "sentence-transformers>=5.6.0",
+]
+
+migrations = [
+    "alembic>=1.18.5",
+]
+
 dev = [
     "ruff>=0.15.21",
 ]

@@ -6,9 +6,9 @@ from sqlalchemy import delete
 from shared.config import settings
 from shared.db.connection import async_session
 from shared.db.models import Chunk
+from shared.embeddings import embed_text
 
 from .chunker import chunk_document
-from .embeddings import embed_chunk
 from .loader import iter_repository
 
 
@@ -29,7 +29,14 @@ async def main():
                 settings.chunk_size,
                 settings.chunk_overlap,
             ):
-                indexed_chunks.append(embed_chunk(chunk))
+                indexed_chunks.append(
+                    Chunk(
+                        content=chunk["content"],
+                        source=chunk["source"],
+                        metadata_=chunk["metadata"],
+                        embedding=embed_text(chunk["content"]),
+                    )
+                )
 
     async with async_session() as session:
         async with session.begin():

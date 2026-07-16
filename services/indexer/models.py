@@ -6,10 +6,3 @@ class Document:
     content: str
     source: str
     metadata: dict
-
-
-@dataclass
-class Chunk:
-    content: str
-    source: str
-    metadata: dict

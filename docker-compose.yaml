@@ -1,4 +1,20 @@
 services:
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile.api
+    command: uv run uvicorn services.api.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      HF_HOME: /cache/huggingface
+    depends_on:
+      - postgres
+    volumes:
+      - huggingface_cache:/cache/huggingface
+
   postgres:
     image: pgvector/pgvector:pg16
     container_name: rag-postgres
@@ -10,8 +26,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   migrations:
-    build:
+    build: 
       context: .
+      dockerfile: Dockerfile.migrations
     command: uv run alembic upgrade head
     env_file:
       - .env
@@ -19,8 +36,10 @@ services:
       - postgres
 
   indexer:
-    build: .
-    command: uv run python -m services.indexer.main
+    build: 
+      context: .
+      dockerfile: Dockerfile.indexer
+    command: python -m services.indexer.main
     profiles:
       - tools
     environment:
