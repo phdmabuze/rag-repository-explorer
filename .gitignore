@@ -1,0 +1,96 @@
+# =====================
+# Python
+# =====================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Type checkers / linters
+.mypy_cache/
+.ruff_cache/
+.pyright/
+
+# =====================
+# Environment / secrets
+# =====================
+
+.env
+.env.*
+!.env.example
+
+# =====================
+# IDE
+# =====================
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+
+# JetBrains
+.idea/
+
+# =====================
+# Aider
+# =====================
+
+.aider*
+.aider.chat.history.md
+
+# =====================
+# RAG data (generated locally)
+# =====================
+
+data/
+storage/
+
+# Raw repositories
+repos/
+
+# Embedding/vector cache
+*.db
+*.sqlite
+*.sqlite3
+
+# =====================
+# Logs
+# =====================
+
+*.log
+logs/
+
+# =====================
+# OS
+# =====================
+
+.DS_Store
+Thumbs.db
+
+# =====================
+# Temporary files
+# =====================
+
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+
+sources.json
