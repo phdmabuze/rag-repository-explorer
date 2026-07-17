@@ -2,7 +2,7 @@ services:
   api:
     build: 
       context: .
-      dockerfile: ./docker/Dockerfile.api
+      dockerfile: ./docker/api/Dockerfile
     command: uv run uvicorn services.api.main:app --host 0.0.0.0 --port 8000
     ports:
       - "8000:8000"
@@ -29,7 +29,7 @@ services:
   migrations:
     build: 
       context: .
-      dockerfile: ./docker/Dockerfile.migrations
+      dockerfile: ./docker/migrations/Dockerfile
     command: uv run alembic upgrade head
     env_file:
       - .env
@@ -39,7 +39,7 @@ services:
   indexer:
     build: 
       context: .
-      dockerfile: ./docker/Dockerfile.indexer
+      dockerfile: ./docker/indexer/Dockerfile
     command: python -m services.indexer.main
     profiles:
       - tools
@@ -56,7 +56,7 @@ services:
   embedding:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile.embedding
+      dockerfile: ./docker/embedding/Dockerfile
     command: uv run uvicorn services.embedding.main:app --host 0.0.0.0 --port 9000
     ports:
       - "9000:9000"

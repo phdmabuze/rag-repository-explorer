@@ -18,7 +18,9 @@ api = [
     "pydantic-ai>=2.11.0",
 ]
 
-indexer = []
+indexer = [
+    "httpx>=0.28.1",
+]
 
 migrations = [
     "alembic>=1.18.5",
