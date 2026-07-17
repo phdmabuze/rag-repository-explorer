@@ -4,7 +4,7 @@ from collections.abc import Iterator
 from pathlib import Path
 from urllib.parse import urlparse
 
-from .models import Document
+from .schemas import Document
 
 EXTENSIONS = {".py", ".md", ".yaml", ".yml"}
 

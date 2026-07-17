@@ -1,6 +1,6 @@
 from collections.abc import Iterator
 
-from .models import Document
+from .schemas import Document
 
 
 def chunk_document(
