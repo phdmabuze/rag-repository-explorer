@@ -20,6 +20,10 @@ class Settings(BaseSettings):
     chunk_size: int = 500
     chunk_overlap: int = 100
 
+    llm_model: str
+
+    embedding_service_url: str
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore",

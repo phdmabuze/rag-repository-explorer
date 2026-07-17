@@ -2,7 +2,7 @@ services:
   api:
     build: 
       context: .
-      dockerfile: Dockerfile.api
+      dockerfile: ./docker/Dockerfile.api
     command: uv run uvicorn services.api.main:app --host 0.0.0.0 --port 8000
     ports:
       - "8000:8000"
@@ -12,6 +12,7 @@ services:
       HF_HOME: /cache/huggingface
     depends_on:
       - postgres
+      - embedding
     volumes:
       - huggingface_cache:/cache/huggingface
 
@@ -28,7 +29,7 @@ services:
   migrations:
     build: 
       context: .
-      dockerfile: Dockerfile.migrations
+      dockerfile: ./docker/Dockerfile.migrations
     command: uv run alembic upgrade head
     env_file:
       - .env
@@ -38,7 +39,7 @@ services:
   indexer:
     build: 
       context: .
-      dockerfile: Dockerfile.indexer
+      dockerfile: ./docker/Dockerfile.indexer
     command: python -m services.indexer.main
     profiles:
       - tools
@@ -48,6 +49,21 @@ services:
       - .env
     depends_on:
       - postgres
+      - embedding
+    volumes:
+      - huggingface_cache:/cache/huggingface
+  
+  embedding:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.embedding
+    command: uv run uvicorn services.embedding.main:app --host 0.0.0.0 --port 9000
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env
+    environment:
+      HF_HOME: /cache/huggingface
     volumes:
       - huggingface_cache:/cache/huggingface
 

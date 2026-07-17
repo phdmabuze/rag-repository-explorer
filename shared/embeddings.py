@@ -1,7 +1,15 @@
-from sentence_transformers import SentenceTransformer
+import httpx
 
-model = SentenceTransformer("BAAI/bge-small-en-v1.5")
+from shared.config import settings
 
 
-def embed_text(text: str) -> list[float]:
-    return model.encode(text).tolist()
+async def embed_texts(texts: list[str]) -> list[list[float]]:
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            f"{settings.embedding_service_url}/embed",
+            json={"texts": texts},
+        )
+
+    response.raise_for_status()
+
+    return response.json()["embeddings"]
